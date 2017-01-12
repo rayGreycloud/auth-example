@@ -11,7 +11,7 @@ const localOptions = { usernameField: 'email' };
 // Pull out username and password
 const localLogin = new LocalStrategy({ localOptions }, function(email, password, done) {
   // Check username and password
-  User.findOne({ email: email }, function(err, user) {
+  User.findOne({ email: email.toLowerCase() }, function(err, user) {
     // Handle search error
     if (err) { return done(err); }
     // If user not found, return false

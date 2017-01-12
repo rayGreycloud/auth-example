@@ -39,7 +39,7 @@ userSchema.methods.comparePassword = function(candidatePassword, callback) {
 
   // Return result of comparison
   callback(null, isMatch);
-});
+  });
 }
 
 // Create model class

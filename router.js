@@ -12,6 +12,6 @@ module.exports = function(app) {
     res.send({ hi: 'authorized!'});
   });
 
-  app.get('/signin', requireSignin, Authentication.signin);
+  app.post('/signin', requireSignin, Authentication.signin);
   app.post('/signup', Authentication.signup);
 }
