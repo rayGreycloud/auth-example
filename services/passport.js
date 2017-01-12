@@ -11,12 +11,22 @@ const localOptions = { usernameField: 'email' };
 // Pull out username and password
 const localLogin = new LocalStrategy({ localOptions }, function(email, password, done) {
   // Check username and password
+  User.findOne({ email: email }, function(err, user) {
+    // Handle search error
+    if (err) { return done(err); }
+    // If user not found, return false
+    if (!user) { return done(null, false); }
 
-  // If verified, call done with user
+    // Check if request password equals user.password
+    user.comparePassword(password, function(err, isMatch) {
+    if (err) { return done(err); }
+    // If passwords don't match, return done
+    if (!isMatch) { return done(null, false); }
 
-  // If not, call done with false
-
-  
+    // If they match, return user model
+    return done(null, user);
+    });
+  });
 });
 
 // Set options for JWT Strategy
@@ -43,5 +53,6 @@ const jwtLogin = new JwtStrategy(jwtOptions, function(payload, done) {
   });
 });
 
-// Tell passport to use it
+// Tell passport to use strategies
 passport.use(jwtLogin);
+passport.use(localLogin);
