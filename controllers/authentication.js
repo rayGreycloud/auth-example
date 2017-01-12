@@ -1,6 +1,6 @@
 const jwt = require('jwt-simple');
-const config = require('../config');
 const User = require('../models/user');
+const config = require('../config');
 
 function tokenForUser(user) {
   const timestamp = new Date().getTime();
@@ -16,7 +16,7 @@ exports.signin = function(req, res, next) {
 exports.signup = function(req, res, next) {
   // Grab email and password for request
   const email = req.body.email;
-  const password = req.body.password
+  const password = req.body.password;
 
   if (!email || !password) {
     return res.status(422).send({error: 'You must provide email and password'});
