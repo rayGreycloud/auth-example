@@ -30,6 +30,18 @@ userSchema.pre('save', function(next) {
   });
 });
 
+// Password verification method
+userSchema.methods.comparePassword = function(candidatePassword, callback) {
+  // Tell bcrypt to hash candidate w/salt and compare to saved hashed password
+  bcrypt.compare(candidatePassword, this.password, function(err, isMatch) {
+  // handle error during comparison
+  if (err) { return callback(err); }
+
+  // Return result of comparison
+  callback(null, isMatch);
+});
+}
+
 // Create model class
 const ModelClass = mongoose.model('user', userSchema);
 
