@@ -9,7 +9,7 @@ const LocalStrategy = require('passport-local');
 // Specify email property for username
 const localOptions = { usernameField: 'email' };
 // Pull out username and password
-const localLogin = new LocalStrategy({ localOptions }, function(email, password, done) {
+const localLogin = new LocalStrategy(localOptions, function(email, password, done) {
   // Check username and password
   User.findOne({ email: email.toLowerCase() }, function(err, user) {
     // Handle search error
